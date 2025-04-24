@@ -117,7 +117,7 @@ st.markdown(
 
 # --- Display the logo at the top ---
 st.markdown('<div class="logo-container">', unsafe_allow_html=True)
-st.image("streamlit_demo/logo.png", caption="Your Logo Here", use_column_width=False)  # logo with CSS for resizing
+st.image("streamlit_demo/logo.png")  # logo with CSS for resizing
 st.markdown('</div>', unsafe_allow_html=True)
 
 # --- Simplified Title ---
