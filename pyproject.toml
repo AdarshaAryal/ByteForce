@@ -1,0 +1,26 @@
+name = "Reboot"
+version = "0.1.0"
+description = "Reboot"
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.2"
+numpy = "^1.26"
+scikit-learn = "^1.4"
+matplotlib = "^3.8"
+seaborn = "^0.13"
+jupyterlab = "^4.1"
+notebook = "^7.1"
+scipy = "^1.13"
+ipykernel = "^6.29"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.3"
+flake8 = "^7.0"
+isort = "^5.13"
+pytest = "^8.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
