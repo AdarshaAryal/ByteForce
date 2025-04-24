@@ -1,6 +1,9 @@
-import streamlit as st
 import time
-from chat_api_conn import get_response  # Assuming you have a function to get chat responses
+
+import streamlit as st
+from chat_api_conn import (
+    get_response,  # Assuming you have a function to get chat responses
+)
 
 # --- Inject CSS for styling ---
 st.markdown(
@@ -112,49 +115,53 @@ st.markdown(
         }
     </style>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
 
 # --- Display the logo at the top ---
 st.markdown('<div class="logo-container">', unsafe_allow_html=True)
 st.image("streamlit_demo/logo.png")  # logo with CSS for resizing
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
 
 # --- Simplified Title ---
 st.title("Transaction Pause 🧘‍♀️💸")
 
 # --- Initialize state ---
-if 'step' not in st.session_state:
-    st.session_state.step = 'mood_before'
-if 'cooldown_complete' not in st.session_state:
+if "step" not in st.session_state:
+    st.session_state.step = "mood_before"
+if "cooldown_complete" not in st.session_state:
     st.session_state.cooldown_complete = False
-if 'cooldown_seconds' not in st.session_state:
+if "cooldown_seconds" not in st.session_state:
     st.session_state.cooldown_seconds = 10
-if 'transaction_cancelled' not in st.session_state:
+if "transaction_cancelled" not in st.session_state:
     st.session_state.transaction_cancelled = False
-if 'chat_active' not in st.session_state:
+if "chat_active" not in st.session_state:
     st.session_state.chat_active = False
-if 'chat_history' not in st.session_state:
+if "chat_history" not in st.session_state:
     st.session_state.chat_history = ""
 
 # --- App Info ---
-st.info("This transaction was flagged as potentially harmful (e.g., gambling, impulse shopping). Let's pause briefly before proceeding.")
+st.info(
+    "This transaction was flagged as potentially harmful (e.g., gambling, impulse shopping). Let's pause briefly before proceeding."
+)
+
 
 # --- Mood input helper ---
 def mood_input(label, key):
-    return st.radio(label, ['😞 Bad', '😐 Okay', '😊 Good'], horizontal=True, key=key)
+    return st.radio(label, ["😞 Bad", "😐 Okay", "😊 Good"], horizontal=True, key=key)
+
 
 # --- Step 1: Mood before transaction ---
-if st.session_state.step == 'mood_before':
+if st.session_state.step == "mood_before":
     st.subheader("How are you feeling right now?")
     mood_before = mood_input("Your mood:", key="mood_before_input")
     if st.button("Start Cooldown"):
         st.session_state.mood_before = mood_before
-        st.session_state.step = 'cooldown'
+        st.session_state.step = "cooldown"
         st.rerun()
 
 # --- Step 2: Cooldown (blocks UI) ---
-elif st.session_state.step == 'cooldown' and not st.session_state.cooldown_complete:
+elif st.session_state.step == "cooldown" and not st.session_state.cooldown_complete:
     st.subheader("Cooldown Timer ⏳")
     st.write("Take a moment. Breathe. Reflect.")
 
@@ -163,11 +170,11 @@ elif st.session_state.step == 'cooldown' and not st.session_state.cooldown_compl
             st.markdown(f"## ⏳ {remaining} seconds remaining...")
             time.sleep(1)
         st.session_state.cooldown_complete = True
-        st.session_state.step = 'mood_after'
+        st.session_state.step = "mood_after"
         st.rerun()
 
 # --- Step 3: Mood after cooldown ---
-elif st.session_state.step == 'mood_after':
+elif st.session_state.step == "mood_after":
     st.subheader("How are you feeling now?")
     mood_after = mood_input("Your mood:", key="mood_after_input")
     st.session_state.mood_after = mood_after
@@ -176,26 +183,25 @@ elif st.session_state.step == 'mood_after':
     col1, col2, col3 = st.columns(3)
     with col1:
         if st.button("✅ Continue with Transaction"):
-            st.session_state.step = 'summary'
+            st.session_state.step = "summary"
             st.session_state.transaction_cancelled = False
             st.rerun()
     with col2:
         if st.button("💬 Talk it through"):
             # Clear the screen and initiate chat
             st.session_state.chat_active = True
-            st.session_state.step = 'chat'
+            st.session_state.step = "chat"
             st.session_state.chat_history = "Bot: Hi! I'm here to help you reflect on your feelings regarding this transaction."
-            
+
             st.rerun()
     with col3:
         if st.button("❌ Cancel Transaction"):
-            st.session_state.step = 'summary'
+            st.session_state.step = "summary"
             st.session_state.transaction_cancelled = True
             st.rerun()
 
 # --- Step 4: Chat Interface ---
-elif st.session_state.step == 'chat' and st.session_state.chat_active:
-    
+elif st.session_state.step == "chat" and st.session_state.chat_active:
     st.title("Talk it through 🤖")
     chat_history = ""
     # Initialize chat history
@@ -222,7 +228,6 @@ elif st.session_state.step == 'chat' and st.session_state.chat_active:
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "bot", "content": response})
 
-
     # # Clear all previous UI elements
     # st.empty()
 
@@ -239,7 +244,7 @@ elif st.session_state.step == 'chat' and st.session_state.chat_active:
 
     # # Input bar for new messages
     # user_input = st.text_area("Your Message", "", key="user_input", height=100)
-    
+
     # # Send button
     # if st.button("Send", key="send_button"):
     #     if user_input:
@@ -259,14 +264,16 @@ elif st.session_state.step == 'chat' and st.session_state.chat_active:
     # Close chat button
     if st.button("Close Chat"):
         st.session_state.chat_active = False
-        st.session_state.step = 'mood_after'
+        st.session_state.step = "mood_after"
         st.rerun()
 
 # --- Step 5: Summary ---
-elif st.session_state.step == 'summary':
+elif st.session_state.step == "summary":
     if st.session_state.transaction_cancelled:
         st.warning("You've chosen not to go through with this transaction.")
-        st.write("That’s a powerful decision. If you’re feeling overwhelmed, consider talking to someone you trust or visiting a support resource.")
+        st.write(
+            "That’s a powerful decision. If you’re feeling overwhelmed, consider talking to someone you trust or visiting a support resource."
+        )
     else:
         st.success("You're continuing with the transaction.")
 

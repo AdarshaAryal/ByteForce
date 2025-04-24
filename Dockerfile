@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8000
 
 # Set entrypoint to run Streamlit app
-ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8000"]
+ENTRYPOINT ["streamlit", "run", "streamlit_demo/streamlit_mockup.py", "--server.port=8000"]
