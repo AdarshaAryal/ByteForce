@@ -2,8 +2,8 @@ import os
 from openai import AzureOpenAI
 
 endpoint = "https://byteforceopenai.openai.azure.com/"
-model_name = "o3-mini"
-deployment = "o3-mini"
+model_name = "gpt-4"
+deployment = "gpt-4"
 
 subscription_key = "<your-api-key>"
 with open("api_key.txt", "r") as f:
@@ -28,7 +28,7 @@ def get_response(input):
             "content": input,
         }
     ],
-    max_completion_tokens=100000,
+    max_tokens=4096,
     model=deployment
 )
     return response.choices[0].message.content.strip()
