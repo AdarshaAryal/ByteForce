@@ -62,3 +62,12 @@ On the Microsoft sign in page use your LBG global credentials (example:Charlotte
 Once authentication is complete you should be re-directed to GitHub Copilot home page.
 
 Now you're ready to start. Happy coding!
+
+### Transaction
+Potential pointer to look in transaction as mental health risk indicator
+
+- Sudden changes in spending habits (e.g., significant increases or decreases).
+- Impulsive spending patterns, potentially linked to mania or hypomania.
+- Missed bill payments or difficulty managing regular financial commitments, potentially linked to depression or anxiety.
+- Increased use of credit for essentials.
+- Sudden drops in income.
